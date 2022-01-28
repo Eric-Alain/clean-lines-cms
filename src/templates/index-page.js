@@ -1,89 +1,62 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link, graphql } from "gatsby";
-import { getImage } from "gatsby-plugin-image";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
+import { Container, Row, Col } from 'react-bootstrap';
+import Layout from '../components/Layout';
+import Sections from '../components/Sections';
+import MarkdownContent from '../components/MarkdownContent';
 
-import Layout from "../components/Layout";
-import Features from "../components/Features";
-import BlogRoll from "../components/BlogRoll";
-import FullWidthImage from "../components/FullWidthImage";
-
-// eslint-disable-next-line
-export const IndexPageTemplate = ({
-  image,
-  title,
-  heading,
-  subheading,
-  mainpitch,
-  description,
-  intro,
-}) => {
-  const heroImage = getImage(image) || image;
-
+const IndexPageTemplate = ({ landingBox, catchyBanner, pageSections }) => {
   return (
-    <div>
-      <FullWidthImage img={heroImage} title={title} subheading={subheading} />
-      <section className="section section--gradient">
-        <div className="container">
-          <div className="section">
-            <div className="columns">
-              <div className="column is-10 is-offset-1">
-                <div className="content">
-                  <div className="content">
-                    <div className="tile">
-                      <h1 className="title">{mainpitch.title}</h1>
-                    </div>
-                    <div className="tile">
-                      <h3 className="subtitle">{mainpitch.description}</h3>
-                    </div>
-                  </div>
-                  <div className="columns">
-                    <div className="column is-12">
-                      <h3 className="has-text-weight-semibold is-size-2">
-                        {heading}
-                      </h3>
-                      <p>{description}</p>
-                    </div>
-                  </div>
-                  <Features gridItems={intro.blurbs} />
-                  <div className="columns">
-                    <div className="column is-12 has-text-centered">
-                      <Link className="btn" to="/products">
-                        See all products
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="column is-12">
-                    <h3 className="has-text-weight-semibold is-size-2">
-                      Latest stories
-                    </h3>
-                    <BlogRoll />
-                    <div className="column is-12 has-text-centered">
-                      <Link className="btn" to="/blog">
-                        Read more
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <Container fluid>
+      <Row>
+        <Col
+          xs='12'
+          className='full-width-image'
+          style={{
+            backgroundImage: `url(${!!landingBox.image.childImageSharp ? landingBox.image.childImageSharp.fluid.src : landingBox.image})`
+          }}
+        >
+          <Row className='justify-content-center mx-2 mx-sm-auto'>
+            <Col xs='10' className='hero-text text-center p-4'>
+              <h1 className='display-2'>{landingBox.title}</h1>
+              <h3 className='text-muted fw-normal'>{landingBox.subheading}</h3>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row className='dbo-red justify-content-center catchy-banner'>
+        <Col xs='10' md='6'>
+          <MarkdownContent content={catchyBanner.body} className='markdown-content' />
+        </Col>
+      </Row>
+      <Row>
+        <Sections pageSections={pageSections} />
+      </Row>
+    </Container>
   );
 };
 
 IndexPageTemplate.propTypes = {
-  image: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  title: PropTypes.string,
-  heading: PropTypes.string,
-  subheading: PropTypes.string,
-  mainpitch: PropTypes.object,
-  description: PropTypes.string,
-  intro: PropTypes.shape({
-    blurbs: PropTypes.array,
+  landingBox: PropTypes.shape({
+    image: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+    title: PropTypes.string,
+    subheading: PropTypes.string
   }),
+  catchyBanner: PropTypes.shape({
+    body: PropTypes.string
+  }),
+  pageSections: PropTypes.shape({
+    section: PropTypes.arrayOf(
+      PropTypes.shape({
+        buttonLocation: PropTypes.string,
+        buttonText: PropTypes.string,
+        image: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+        subheading: PropTypes.string,
+        text: PropTypes.string
+      })
+    )
+  })
 };
 
 const IndexPage = ({ data }) => {
@@ -91,15 +64,7 @@ const IndexPage = ({ data }) => {
 
   return (
     <Layout>
-      <IndexPageTemplate
-        image={frontmatter.image}
-        title={frontmatter.title}
-        heading={frontmatter.heading}
-        subheading={frontmatter.subheading}
-        mainpitch={frontmatter.mainpitch}
-        description={frontmatter.description}
-        intro={frontmatter.intro}
-      />
+      <IndexPageTemplate landingBox={frontmatter.landingBox} catchyBanner={frontmatter.catchyBanner} pageSections={frontmatter.pageSections} />
     </Layout>
   );
 };
@@ -107,41 +72,33 @@ const IndexPage = ({ data }) => {
 IndexPage.propTypes = {
   data: PropTypes.shape({
     markdownRemark: PropTypes.shape({
-      frontmatter: PropTypes.object,
-    }),
-  }),
+      frontmatter: PropTypes.object
+    })
+  })
 };
 
 export default IndexPage;
 
 export const pageQuery = graphql`
-  query IndexPageTemplate {
-    markdownRemark(frontmatter: { templateKey: { eq: "index-page" } }) {
+  query IndexPageTemplate($id: String!) {
+    markdownRemark(id: { eq: $id }) {
       frontmatter {
-        title
-        image {
-          childImageSharp {
-            gatsbyImageData(quality: 100, layout: FULL_WIDTH)
-          }
-        }
-        heading
-        subheading
-        mainpitch {
+        landingBox {
+          image
           title
-          description
+          subheading
         }
-        description
-        intro {
-          blurbs {
-            image {
-              childImageSharp {
-                gatsbyImageData(width: 240, quality: 64, layout: CONSTRAINED)
-              }
-            }
+        catchyBanner {
+          body
+        }
+        pageSections {
+          section {
+            image
+            subheading
             text
+            buttonText
+            buttonLocation
           }
-          heading
-          description
         }
       }
     }

@@ -1,115 +1,52 @@
-import * as React from "react";
-import { Link } from "gatsby";
+import React from 'react'
+import { Link } from 'gatsby'
+import { Container, Row, Col } from 'react-bootstrap';
 
-import logo from "../img/logo.svg";
-import facebook from "../img/social/facebook.svg";
-import instagram from "../img/social/instagram.svg";
-import twitter from "../img/social/twitter.svg";
-import vimeo from "../img/social/vimeo.svg";
+const Footer = () => {
+  return (
+    <footer>
+      <Container>
+        <Row className='justify-content-between'>
+          <Col xs='12' sm='6' lg='8' className='mb-4'>
+            <h3>Company name</h3>
+            <p>
+              Street name
+              <br />
+              City, Province/State Postal/Zip code
+              <br />
+              Country
+            </p>
+            <p>
+              <Link to='/contact'>Contact us</Link>
+            </p>
+          </Col>
+          <Col xs='12' sm='auto' className='mb-4'>
+            <h3>Follow</h3>
+            <p>
+              <a href='#a'>Facebook</a>
+              <br />
+              <a href='#a'>Instagram</a>
+              <br />
+              <a href='#a'>Twitter</a>
+              <br />
+              <a href='#a'>Youtube</a>
+            </p>
+          </Col>
+          <Col xs='12' sm='auto' className='mb-4'>
+            <h3>Related</h3>
+            <p>
+              <a href='#a'>Related 1</a>
+              <br />
+              <a href='#a'>Related 2</a>
+              <br />
+              <a href='#a'>Related 3</a>
+              <br />
+            </p>
+          </Col>
+        </Row>
+      </Container>
+    </footer>
+  );
+}
 
-const Footer = class extends React.Component {
-  render() {
-    return (
-      <footer className="footer has-background-black has-text-white-ter">
-        <div className="content has-text-centered">
-          <img
-            src={logo}
-            alt="Kaldi"
-            style={{ width: "14em", height: "10em" }}
-          />
-        </div>
-        <div className="content has-text-centered has-background-black has-text-white-ter">
-          <div className="container has-background-black has-text-white-ter">
-            <div style={{ maxWidth: "100vw" }} className="columns">
-              <div className="column is-4">
-                <section className="menu">
-                  <ul className="menu-list">
-                    <li>
-                      <Link to="/" className="navbar-item">
-                        Home
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="navbar-item" to="/about">
-                        About
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="navbar-item" to="/products">
-                        Products
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="navbar-item" to="/contact/examples">
-                        Form Examples
-                      </Link>
-                    </li>
-                    <li>
-                      <a
-                        className="navbar-item"
-                        href="/admin/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Admin
-                      </a>
-                    </li>
-                  </ul>
-                </section>
-              </div>
-              <div className="column is-4">
-                <section>
-                  <ul className="menu-list">
-                    <li>
-                      <Link className="navbar-item" to="/blog">
-                        Latest Stories
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="navbar-item" to="/contact">
-                        Contact
-                      </Link>
-                    </li>
-                  </ul>
-                </section>
-              </div>
-              <div className="column is-4 social">
-                <a title="facebook" href="https://facebook.com">
-                  <img
-                    src={facebook}
-                    alt="Facebook"
-                    style={{ width: "1em", height: "1em" }}
-                  />
-                </a>
-                <a title="twitter" href="https://twitter.com">
-                  <img
-                    className="fas fa-lg"
-                    src={twitter}
-                    alt="Twitter"
-                    style={{ width: "1em", height: "1em" }}
-                  />
-                </a>
-                <a title="instagram" href="https://instagram.com">
-                  <img
-                    src={instagram}
-                    alt="Instagram"
-                    style={{ width: "1em", height: "1em" }}
-                  />
-                </a>
-                <a title="vimeo" href="https://vimeo.com">
-                  <img
-                    src={vimeo}
-                    alt="Vimeo"
-                    style={{ width: "1em", height: "1em" }}
-                  />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    );
-  }
-};
-
-export default Footer;
+export default Footer

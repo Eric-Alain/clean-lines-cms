@@ -1,0 +1,707 @@
+/***********/
+/*VARIABLES*/
+/***********/
+
+$white: #fff;
+$light-grey: #eff0f1;
+$theme-green: #495e31;
+$theme-green-accent: #647f43;
+$gold: #ab9900;
+$alt-black: #1b1b1b;
+$black: #000;
+
+$primary: $theme-green;
+$primary-accent: $theme-green-accent;
+$primary-trim: $gold;
+$primary-invert: $white;
+
+//Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+//Small tablets (portrait view)
+$screen-md-min: 768px;
+
+//Tablets and small desktops
+$screen-lg-min: 992px;
+
+//Large tablets and desktops
+$screen-xl-min: 1200px;
+
+/********/
+/*MIXINS*/
+/********/
+
+/*Color opacity function*/
+@mixin colorOpacify($color, $r, $g, $b, $a) {
+  background: rgba($r, $g, $b, $a);
+  color: $color;
+}
+
+//Breakpoint mixins
+
+//Small devices
+@mixin sm {
+  @media (min-width: #{$screen-sm-min}) {
+    @content;
+  }
+}
+
+//Medium devices
+@mixin md {
+  @media (min-width: #{$screen-md-min}) {
+    @content;
+  }
+}
+
+//Large devices
+@mixin lg {
+  @media (min-width: #{$screen-lg-min}) {
+    @content;
+  }
+}
+
+//Extra large devices
+@mixin xl {
+  @media (min-width: #{$screen-xl-min}) {
+    @content;
+  }
+}
+
+//Custom devices
+@mixin rwd($screen) {
+  @media (min-width: '#{$screen}px') {
+    @content;
+  }
+}
+
+/*Smooth transitions and browser support*/
+@mixin transition($args) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin brightness($amount) {
+  filter: brightness($amount);
+  -webkit-filter: brightness($amount);
+}
+
+/*****************************/
+/*SOME DEFAULTS AND OVERRIDES*/
+/*****************************/
+html,
+body {
+  overflow-x: hidden;
+}
+
+//This allows the footer to remain at the bottom of the page and for the for
+//the main content of the page to use up the remaining available space
+.main-container {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+
+  .main-content {
+    flex: 1 1 auto;
+
+    footer {
+      flex: 0 1 auto;
+    }
+  }
+}
+
+main {
+  margin: 5rem auto;
+
+  a {
+    color: $primary-accent;
+    text-decoration: none;
+    @include transition(all 0.2s ease-out);
+
+    &:hover {
+      color: $primary-accent;
+      text-decoration: underline;
+      @include brightness(130%);
+      @include transition(all 0.2s ease-out);
+    }
+  }
+
+  section {
+    margin-top: 2rem;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: auto !important;
+  margin-bottom: 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .w-md-25 {
+    width: 25% !important;
+  }
+  .w-md-50 {
+    width: 50% !important;
+  }
+  .w-md-75 {
+    width: 75% !important;
+  }
+}
+
+.text-white {
+  color: white;
+}
+
+.dbo-red {
+  background: $primary !important;
+  color: $primary-invert !important;
+}
+
+.dbo-red-75 {
+  @include colorOpacify($primary-invert, 136, 16, 18, 0.75);
+}
+
+.dbo-red-50 {
+  @include colorOpacify($primary-invert, 136, 16, 18, 0.5);
+}
+
+.dbo-red-25 {
+  @include colorOpacify($primary-invert, 136, 16, 18, 0.25);
+}
+
+.dbo-black {
+  background: $alt-black !important;
+  color: $primary-invert !important;
+}
+
+.dbo-black-75 {
+  @include colorOpacify($primary-invert, 27, 27, 27, 0.75);
+}
+
+.dbo-black-50 {
+  @include colorOpacify($primary-invert, 27, 27, 27, 0.5);
+}
+
+.dbo-black-25 {
+  @include colorOpacify($primary-invert, 27, 27, 27, 0.25);
+}
+
+.full-width-image {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: top left;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  &:hover {
+    @include transition(all 0.2s ease-out);
+  }
+  @include transition(all 0.2s ease-out);
+}
+
+/********/
+/*NAVBAR*/
+/********/
+
+/*Custom variant*/
+.navbar-white .navbar-nav .nav-link {
+  color: $primary-invert;
+}
+
+.navbar-white .navbar-nav .nav-link:hover {
+  background: $primary;
+}
+
+.navbar {
+  .navbar-brand {
+    img {
+      margin: -12px auto;
+    }
+  }
+
+  .navbar-toggler {
+    color: $primary-invert;
+    border: 2px solid $primary-invert;
+    height: 3.25rem;
+    width: 3.5rem;
+
+    .navbar-toggler-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .navbar-nav {
+    .dropdown-toggle {
+      &:after {
+        display: none;
+      }
+    }
+
+    .dropdown:hover > .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu {
+      padding: 0;
+      border-radius: 0;
+      @include transition(all 0.2s ease-out);
+
+      .dropdown-item {
+        padding: 0.5rem;
+
+        &:hover {
+          background: $primary;
+          color: $primary-invert;
+        }
+      }
+      &:hover {
+        @include transition(all 0.2s ease-out);
+      }
+    }
+  }
+
+  .navbar-nav.site-menu {
+    .nav-link,
+    .dropdown-menu {
+      margin-left: 0.8rem;
+      margin-top: 0;
+    }
+  }
+  .social-nav {
+    flex-direction: row;
+    padding-left: 0.65rem;
+
+    @include lg {
+      padding-left: inherit;
+    }
+
+    svg {
+      margin-right: 1rem;
+
+      @include lg {
+        margin-right: inherit !important;
+      }
+    }
+  }
+}
+
+/********/
+/*FOOTER*/
+/********/
+footer {
+  background-color: $light-grey;
+  padding: 3rem 2rem;
+  position: relative;
+
+  a {
+    color: $primary-accent;
+    text-decoration: none;
+    @include transition(all 0.2s ease-out);
+
+    &:hover {
+      color: $primary-accent;
+      text-decoration: underline;
+      @include brightness(130%);
+      @include transition(all 0.2s ease-out);
+    }
+  }
+}
+
+/************/
+/*INDEX PAGE*/
+/************/
+.hero-text {
+  background: $primary-invert;
+  box-shadow: 0px 0px 20px $primary;
+  position: relative;
+
+  &:after {
+    content: '';
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    outline: 1px solid $primary-trim;
+    outline-offset: 2rem;
+  }
+}
+
+.catchy-banner {
+  padding: 2.5rem 0;
+
+  @include md {
+    padding: 5rem 0;
+  }
+}
+
+.landing-sections {
+  padding: 5rem 0;
+
+  &:nth-child(odd) {
+    background: #000;
+  }
+
+  &:nth-child(even) {
+    background: #1b1b1b;
+  }
+
+  .gatsby-image-wrapper {
+    z-index: 0;
+    width: 90%;
+    height: auto;
+    max-height: 400px;
+    border-radius: 0.25rem;
+    box-shadow: 2px 2px 8px grey;
+    object-fit: cover;
+
+    img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @include sm {
+      width: 450px;
+      max-height: 400px;
+    }
+
+    @include md {
+      width: 550px;
+      max-height: 600px;
+    }
+
+    @include xl {
+      width: 650px;
+    }
+  }
+
+  .section-left,
+  .section-right {
+    position: relative;
+    z-index: 0;
+    white-space: break-spaces;
+  }
+
+  .section-card {
+    z-index: 1;
+    position: absolute;
+    width: 55%;
+    font-size: 0.7rem;
+    box-shadow: 0 0 8px $primary;
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      outline: 1px solid $primary-trim;
+      outline-offset: 1rem;
+    }
+
+    @include md {
+      font-size: 1rem;
+    }
+
+    .card-body {
+      z-index: 3;
+
+      .btn {
+        font-size: 0.7rem;
+        padding: 0.375rem 0.5rem;
+
+        @include md {
+          font-size: 1rem;
+          padding: 0.375rem 0.75rem;
+        }
+      }
+    }
+  }
+
+  .section-left {
+    .gatsby-image-wrapper {
+      left: -15%;
+      @include md {
+        left: -10%;
+      }
+
+      @include lg {
+        left: -5%;
+      }
+
+      @include xl {
+        left: 0;
+      }
+    }
+    .section-card {
+      top: 50%;
+      right: 10%;
+
+      @include sm {
+        top: 55%;
+        right: 8%;
+        width: 55%;
+      }
+
+      @include md {
+        top: 30%;
+        right: 8%;
+        width: 45%;
+      }
+
+      @include lg {
+        left: 50%;
+        width: 40%;
+      }
+
+      @include xl {
+        left: 42%;
+        width: 600px;
+      }
+
+      @include rwd(1400) {
+        left: 45%;
+        width: 600px;
+      }
+      .btn {
+        background: $primary;
+        color: $primary-invert;
+        &:hover {
+          background: lighten($primary, 15%);
+        }
+      }
+    }
+  }
+
+  .section-right {
+    .gatsby-image-wrapper {
+      float: right;
+      right: -5%;
+
+      @include md {
+        right: -10%;
+      }
+
+      @include lg {
+        right: -5%;
+      }
+
+      @include xl {
+        right: 0;
+      }
+    }
+    .section-card {
+      top: 50%;
+      left: 5%;
+
+      @include sm {
+        top: 55%;
+        left: 5%;
+        width: 55%;
+      }
+
+      @include md {
+        top: 30%;
+        left: 5%;
+        width: 45%;
+      }
+
+      @include lg {
+        left: auto;
+        right: 55%;
+        width: 40%;
+      }
+
+      @include xl {
+        left: auto;
+        right: 50%;
+        width: 600px;
+      }
+
+      @include rwd(1600) {
+        left: auto;
+        right: 45%;
+        width: 600px;
+      }
+
+      .btn {
+        background: $alt-black;
+        color: $primary-invert;
+
+        &:hover {
+          background: lighten($alt-black, 15%);
+        }
+      }
+    }
+  }
+}
+
+/*********************/
+/**RULES AND REFFING**/
+/*********************/
+.notice-card {
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+
+  .notice-card-header {
+    font-size: calc(1.5 * 1rem);
+    margin-bottom: 1rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid #dadada;
+  }
+
+  .notice-card-body ol {
+    padding-inline-start: 1rem;
+  }
+
+  .notice-card-body ol li {
+    margin-bottom: 0.6rem;
+  }
+
+  .notice-card-body ol ol {
+    padding-inline-start: 2rem;
+  }
+}
+
+.notice-card.dark {
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+
+  a {
+    color: #f899ff;
+    @include transition(all 0.2s ease-out);
+
+    &:hover {
+      filter: brightness(80%);
+      @include transition(all 0.2s ease-out);
+    }
+  }
+}
+
+/*crush these later, probably*/
+// blog roll
+.blog-list-item.is-featured {
+  background-color: $light-grey;
+}
+.blog-list-item header {
+  display: flex;
+  margin-bottom: 1em;
+}
+.blog-list-item .featured-thumbnail {
+  flex-basis: 35%;
+  margin: 0 1.5em 0 0;
+}
+
+/***********/
+/*GALLERIES*/
+/***********/
+.zoom-overlay {
+  overflow: hidden;
+  cursor: pointer;
+
+  img {
+    -webkit-transition: 0.8s;
+    -moz-transition: 0.8s;
+    -o-transition: 0.8s;
+    -ms-transition: 0.8s;
+    transition: 0.8s;
+
+    &:hover {
+      -moz-transform: scale(1.25) rotate(0deg);
+      -webkit-transform: scale(1.25) rotate(0deg);
+      -o-transform: scale(1.25) rotate(0deg);
+      -ms-transform: scale(1.25) rotate(0deg);
+      transform: scale(1.25) rotate(0deg);
+      -webkit-transition: 0.8s;
+      -moz-transition: 0.8s;
+      -o-transition: 0.8s;
+      -ms-transition: 0.8s;
+      transition: 0.8s;
+    }
+  }
+}
+
+/**********/
+/*LIGHTBOX*/
+/**********/
+.ReactGridGallery {
+  display: flex;
+  flex-wrap: wrap;
+
+  .ReactGridGallery_tile {
+    height: 25vh;
+    width: 49%;
+    margin: 1px!important;
+
+    @include md {
+      width: 32.5%;
+      margin: 2px!important;
+    }
+
+    @include lg {
+      width: 24.45%;
+    }
+
+    @include xl {
+      width: 24.45%;
+    }
+
+    @include rwd(1600) {
+      width: 24.65%;
+    }
+
+    .ReactGridGallery_tile-viewport {
+      flex-grow: 1;
+      width: 100% !important;
+      height: 25vh !important;
+
+      img {
+        width: auto !important;
+        height: auto !important;
+        margin-left: auto !important;
+        max-height: 100%;
+        min-width: 100%;
+        object-fit: cover;
+        vertical-align: bottom;
+        -webkit-transition: 0.8s;
+        -moz-transition: 0.8s;
+        -o-transition: 0.8s;
+        -ms-transition: 0.8s;
+        transition: 0.8s;
+
+        &:hover {
+          -moz-transform: scale(1.05) rotate(0deg);
+          -webkit-transform: scale(1.05) rotate(0deg);
+          -o-transform: scale(1.05) rotate(0deg);
+          -ms-transform: scale(1.05) rotate(0deg);
+          transform: scale(1.05) rotate(0deg);
+          -webkit-transition: 0.8s;
+          -moz-transition: 0.8s;
+          -o-transition: 0.8s;
+          -ms-transition: 0.8s;
+          transition: 0.8s;
+        }
+      }
+    }
+  }
+}

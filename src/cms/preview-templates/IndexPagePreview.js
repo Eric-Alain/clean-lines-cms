@@ -1,26 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { IndexPageTemplate } from '../../templates/index-page'
+import IndexPageTemplate from '../../templates/index-page'
 
 const IndexPagePreview = ({ entry, getAsset }) => {
-  const data = entry.getIn(['data']).toJS()
-
-  if (data) {
+  if (entry) {
     return (
       <IndexPageTemplate
-        image={getAsset(data.image)}
-        title={data.title}
-        heading={data.heading}
-        subheading={data.subheading}
-        description={data.description}
-        intro={data.intro || { blurbs: [] }}
-        mainpitch={data.mainpitch || {}}
+        landingBox={{
+          image: entry.getIn(['data', 'landingBox', 'image']).toJS(),
+          title: entry.getIn(['data', 'landingBox', 'title']),
+          subheading: entry.getIn(['data', 'landingBox', 'subheading'])
+        }}
+        catchyBanner={{
+          body: entry.getIn(['data', 'catchyBanner', 'body'])
+        }}
+        pageSections={{
+          section: entry.getIn(['data', 'pageSections', 'section']).toJS()
+        }}
       />
-    )
+    );
   } else {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
-}
+};
 
 IndexPagePreview.propTypes = {
   entry: PropTypes.shape({

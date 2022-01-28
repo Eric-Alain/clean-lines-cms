@@ -1,246 +1,166 @@
 backend:
   name: git-gateway
+  local_backend:
+    true
+    # when using a custom proxy server port
+  url: http://localhost:8082/api/v1
+  # when accessing the local site from a host other than 'localhost' or '127.0.0.1'
+  allowed_hosts: ['192.168.0.1']
   branch: master
   commit_messages:
-    create: "Create {{collection}} “{{slug}}”"
-    update: "Update {{collection}} “{{slug}}”"
-    delete: "Delete {{collection}} “{{slug}}”"
-    uploadMedia: "[skip ci] Upload “{{path}}”"
-    deleteMedia: "[skip ci] Delete “{{path}}”"
+    create: 'Create {{collection}} “{{slug}}”'
+    update: 'Update {{collection}} “{{slug}}”'
+    delete: 'Delete {{collection}} “{{slug}}”'
+    uploadMedia: '[skip ci] Upload “{{path}}”'
+    deleteMedia: '[skip ci] Delete “{{path}}”'
 
-local_backend: true
+slug:
+  encoding: "ascii"
+  clean_accents: true
+
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: 'dky5oko1h'
+    api_key: 216125798889682
+    multiple: true
+
 media_folder: static/img
 public_folder: /img
 
 collections:
-  - name: "blog"
-    label: "Blog"
-    folder: "src/pages/blog"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - {
-          label: "Template Key",
-          name: "templateKey",
-          widget: "hidden",
-          default: "blog-post",
-        }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Featured Post", name: "featuredpost", widget: "boolean" }
-      - { label: "Featured Image", name: "featuredimage", widget: image }
-      - { label: "Body", name: "body", widget: "markdown" }
-      - { label: "Tags", name: "tags", widget: "list" }
-
-  - name: "pages"
-    label: "Pages"
+  # Collection of unique, root level pages that aren't to be built over and over
+  - label: 'Unique pages'
+    name: 'unique-pages'
     files:
-      - file: "src/pages/index.md"
-        label: "Landing Page"
-        name: "index"
+      - file: 'src/pages/index.md'
+        label: 'Landing page'
+        name: 'landing-page'
         fields:
+          - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'index-page' }
+          # hero banner, title and subheading
           - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "index-page",
-            }
-          - { label: Title, name: title, widget: string }
-          - { label: Image, name: image, widget: image }
-          - { label: Heading, name: heading, widget: string }
-          - { label: Subheading, name: subheading, widget: string }
-          - {
-              label: Mainpitch,
-              name: mainpitch,
+              label: 'Landing Box',
+              name: landingBox,
               widget: object,
               fields:
                 [
+                  { label: Image, name: image, widget: image },
                   { label: Title, name: title, widget: string },
-                  { label: Description, name: description, widget: text },
-                ],
+                  { label: Subheading, name: subheading, widget: string }
+                ]
             }
-          - { label: Description, name: description, widget: string }
+          - { label: 'Catchy Banner', name: catchyBanner, widget: object, fields: [{ label: Body, name: body, widget: markdown }] }
           - {
-              label: Intro,
-              name: intro,
+              label: 'Page Sections',
+              name: pageSections,
               widget: object,
               fields:
                 [
-                  { label: Heading, name: heading, widget: string },
-                  { label: Description, name: description, widget: text },
                   {
-                    label: Blurbs,
-                    name: blurbs,
+                    label: Section,
+                    name: section,
                     widget: list,
                     fields:
                       [
-                        { label: Image, name: image, widget: image },
-                        { label: Text, name: text, widget: text },
-                      ],
-                  },
-                ],
+                        { label: Image, name: image, widget: image, default: [''] },
+                        { label: Subheading, name: subheading, widget: string, default: '' },
+                        { label: Text, name: text, widget: 'markdown', default: '' },
+                        { label: ButtonText, name: buttonText, widget: 'string', default: 'Learn more' },
+                        { label: ButtonLocation, name: buttonLocation, widget: 'string', pattern: ['^\/.*?$', 'Must begin with "/" '], default: ['/'] }
+                      ]
+                  }
+                ]
             }
-          - {
-              label: Main,
-              name: main,
-              widget: object,
-              fields:
-                [
-                  { label: Heading, name: heading, widget: string },
-                  { label: Description, name: description, widget: text },
-                  {
-                    label: Image1,
-                    name: image1,
-                    widget: object,
-                    fields:
-                      [
-                        { label: Image, name: image, widget: image },
-                        { label: Alt, name: alt, widget: string },
-                      ],
-                  },
-                  {
-                    label: Image2,
-                    name: image2,
-                    widget: object,
-                    fields:
-                      [
-                        { label: Image, name: image, widget: image },
-                        { label: Alt, name: alt, widget: string },
-                      ],
-                  },
-                  {
-                    label: Image3,
-                    name: image3,
-                    widget: object,
-                    fields:
-                      [
-                        { label: Image, name: image, widget: image },
-                        { label: Alt, name: alt, widget: string },
-                      ],
-                  },
-                ],
-            }
-      - file: "src/pages/about/index.md"
-        label: "About"
-        name: "about"
+      - file: 'src/pages/all-galleries.md'
+        label: 'Gallery landing'
+        name: 'gallery-landing'
         fields:
+          - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'gallery-landing' }
+          - { label: 'Title', name: 'title', widget: 'string', default: 'All Galleries' }
           - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "about-page",
+              label: Description,
+              name: description,
+              widget: string,
+              default: 'Describe put a cool description of your galleries if you want. Describe what the user might expect to find here.',
+              required: false
             }
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Body", name: "body", widget: "markdown" }
-      - file: "src/pages/products/index.md"
-        label: "Products Page"
-        name: "products"
-        fields:
-          - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "product-page",
-            }
-          - { label: Title, name: title, widget: string }
-          - { label: Image, name: image, widget: image }
-          - { label: Heading, name: heading, widget: string }
-          - { label: Description, name: description, widget: string }
-          - {
-              label: Intro,
-              name: intro,
-              widget: object,
-              fields:
-                [
-                  { label: Heading, name: heading, widget: string },
-                  { label: Description, name: description, widget: text },
-                  {
-                    label: Blurbs,
-                    name: blurbs,
-                    widget: list,
-                    fields:
-                      [
-                        { label: Image, name: image, widget: image },
-                        { label: Text, name: text, widget: text },
-                      ],
-                  },
-                ],
-            }
-          - {
-              label: Main,
-              name: main,
-              widget: object,
-              fields:
-                [
-                  { label: Heading, name: heading, widget: string },
-                  { label: Description, name: description, widget: text },
-                  {
-                    label: Image1,
-                    name: image1,
-                    widget: object,
-                    fields:
-                      [
-                        { label: Image, name: image, widget: image },
-                        { label: Alt, name: alt, widget: string },
-                      ],
-                  },
-                  {
-                    label: Image2,
-                    name: image2,
-                    widget: object,
-                    fields:
-                      [
-                        { label: Image, name: image, widget: image },
-                        { label: Alt, name: alt, widget: string },
-                      ],
-                  },
-                  {
-                    label: Image3,
-                    name: image3,
-                    widget: object,
-                    fields:
-                      [
-                        { label: Image, name: image, widget: image },
-                        { label: Alt, name: alt, widget: string },
-                      ],
-                  },
-                ],
-            }
-          - {
-              label: Testimonials,
-              name: testimonials,
-              widget: list,
-              fields:
-                [
-                  { label: Quote, name: quote, widget: string },
-                  { label: Author, name: author, widget: string },
-                ],
-            }
-          - { label: Full_image, name: full_image, widget: image }
-          - {
-              label: Pricing,
-              name: pricing,
-              widget: object,
-              fields:
-                [
-                  { label: Heading, name: heading, widget: string },
-                  { label: Description, name: description, widget: string },
-                  {
-                    label: Plans,
-                    name: plans,
-                    widget: list,
-                    fields:
-                      [
-                        { label: Plan, name: plan, widget: string },
-                        { label: Price, name: price, widget: string },
-                        {
-                          label: Description,
-                          name: description,
-                          widget: string,
-                        },
-                        { label: Items, name: items, widget: list },
-                      ],
-                  },
-                ],
-            }
+
+  # Collection of all pages found in the technical menu
+  - label: 'Gallery pages'
+    label_singular: 'gallery page'
+    name: 'gallery-pages'
+    folder: 'src/pages/galleries'
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'gallery-page' }
+      - { label: 'Title', name: 'title', widget: 'string', default: 'Gallery' }
+      - {
+          label: Gallery,
+          name: gallery,
+          widget: object,
+          fields:
+            [
+              { label: Images, name: images, widget: image, default: [''] },
+              {
+                label: Description,
+                name: description,
+                widget: string,
+                default: 'Describe what your gallery is all about. You can make a long description, or keep it brief. Do what feels good.'
+              }
+            ]
+        }
+
+  # Collection of all pages found in the technical menu
+  - label: 'Template pages'
+    label_singular: 'template page'
+    name: 'template-pages'
+    folder: 'src/pages/content'
+    create: true
+    fields:
+      - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'template-page' }
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - {
+          label: 'Template page sections',
+          name: 'templatePageSections',
+          widget: 'object',
+          fields:
+            [
+              {
+                label: Section,
+                name: templateSection,
+                widget: list,
+                fields:
+                  [
+                    { label: Subheading, name: subheading, widget: string },
+                    { label: 'Heading level', name: headingLevel, widget: 'select', options: ['h2', 'h3', 'h4', 'h5', 'h6'], default: 'h2', required: false },
+                    { label: ID, name: id, widget: string, required: false },
+                    { label: Image, name: image, widget: image, allow_multiple: true, default: [''], required: false },
+                    { label: Alt text, name: alt, widget: string, required: false },
+                    { label: 'Image float', name: imageFloat, widget: 'select', options: ['Left', 'Right'], default: 'default', required: false },
+                    { label: 'Image width', name: imageWidth, widget: 'select', options: ['25%', '50%', '75%'], default: 'default', required: false },
+                    { label: Text, name: text, widget: 'markdown', default: '', required: false },
+                    { label: 'Second column text', name: extraText, widget: 'markdown', default: '', required: false }
+                  ]
+              }
+            ]
+        }
+
+  # Blog
+  - name: 'blog'
+    label: 'Blog'
+    label_singular: 'blog'
+    folder: 'src/pages/blog'
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'blog-post' }
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - { label: 'Description', name: 'description', widget: 'text' }
+      - { label: 'Featured Post', name: 'featuredpost', widget: 'boolean' }
+      - { label: 'Featured Image', name: 'featuredimage', widget: image }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+      - { label: 'Tags', name: 'tags', widget: 'list' }
