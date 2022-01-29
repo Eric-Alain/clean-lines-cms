@@ -125,7 +125,7 @@ const NavbarHeader = () => {
           <Row>
             <Col xs='12'>
               <Nav className='justify-content-end site-menu'>
-                <Link to='content/about' className='nav-link'>
+                <Link to='/content/about' className='nav-link'>
                   About
                 </Link>
                 <NavDropdown title='Services' id='services-dropdown' renderMenuOnMount={true}>

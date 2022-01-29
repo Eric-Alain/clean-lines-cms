@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GalleryLandingPageTemplate from '../../templates/gallery-landing';
+import { GalleryLandingPageTemplate } from '../../templates/all-template-exports';
 
 const GalleryLandingPagePreview = ({ entry, getAsset }) => {
   if (entry) {

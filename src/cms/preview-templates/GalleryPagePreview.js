@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GalleryPageTemplate from '../../templates/gallery-page';
+import { GalleryPageTemplate } from '../../templates/all-template-exports';
 
 const GalleryPagePreview = ({ entry, getAsset }) => {
   if (entry) {
     let data = entry.getIn(['data']).toJS();
-    
+
     const mapGallery = (obj) => {
-      console.log(obj)
-      
+      console.log(obj);
+
       if (obj.gallery.images) {
         return obj.gallery.images.map((item) => getAsset(item));
       } else {
-        return [""];
+        return [''];
       }
     };
 

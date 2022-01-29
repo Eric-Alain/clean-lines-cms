@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TemplatePageTemplate from '../../templates/template-page';
+import { TemplatePageTemplate } from '../../templates/all-template-exports';
 
 const TemplatePagePreview = ({ entry, getAsset }) => {
   if (entry) {
     const data = entry.getIn(['data']) ? entry.getIn(['data']).toJS() : {};
-    //console.log(getAsset(data.templatePageSections.templateSection[0].image.toString()));
     let templateSection = [];
 
     if (data.hasOwnProperty('templatePageSections')) {

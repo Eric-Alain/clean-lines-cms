@@ -25,15 +25,15 @@ pageSections:
       subheading: About
       text: Learn more about what makes us who we are.
       buttonText: Learn more
-      buttonLocation: /about
+      buttonLocation: /content/about
     - buttonText: Learn more
-      buttonLocation: /services
+      buttonLocation: /content/services
       subheading: Services
       text: What we have to offer.
       image:
         - https://res.cloudinary.com/dky5oko1h/image/upload/v1635866302/Clean%20lines%20/Gallery%20one/about_b5ced1.jpg
     - buttonText: Check out galleries
-      buttonLocation: /galleries
+      buttonLocation: /all-galleries
       image:
         - https://res.cloudinary.com/dky5oko1h/image/upload/v1637176940/Clean%20lines%20/Gallery%20two/jay-mantri-TFyi0QOx08c-unsplash_twx0mv.jpg
       subheading: Galleries

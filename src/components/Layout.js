@@ -5,7 +5,6 @@ import { withPrefix } from 'gatsby';
 import NavbarHeader from '../components/NavbarHeader';
 import Footer from '../components/Footer';
 
-
 const TemplateWrapper = ({ children }) => {
   const { title, description } = useSiteMetadata();
   return (

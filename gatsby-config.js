@@ -1,8 +1,13 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby + Netlify CMS Starter',
+    title: 'Clean lines CMS',
     description:
-      'This repo contains an example business website that is built with Gatsby, and Netlify CMS.It follows the JAMstack architecture by using Git as a single source of truth, and Netlify for continuous deployment, and CDN distribution.'
+      'This repo contains an example business website that is built with Gatsby, and Netlify CMS. It follows the JAMstack architecture by using Git as a single source of truth, and Netlify for continuous deployment, and CDN distribution.'
+  },
+  flags: {
+    //PRESERVE_FILE_DOWNLOAD_CACHE: true,
+    PARALLEL_SOURCING: true,
+    FAST_DEV: true
   },
   plugins: [
     {
@@ -11,16 +16,32 @@ module.exports = {
         mergeScriptHashes: false,
         mergeStyleHashes: false,
         directives: {
-          'script-src': `'self' 'unsafe-inline' 'unsafe-eval'`,
-          'script-src-elem': `'self' 'unsafe-inline' 'unsafe-eval'`,
+          'script-src': `'self' 'unsafe-inline' https://*.netlify.com`,
           'style-src': `'self' 'unsafe-inline'`,
-          'img-src': `'self' https://res.cloudinary.com`,
-          'media-src': `'self' https://res.cloudinary.com`,
-          'font-src': `'self' data: https://fontawesome.com`
+          'img-src': `'self' https://*.cloudinary.com`,
+          'media-src': `'self' https://*.cloudinary.com`,
+          'font-src': `'self' data: https://*.fontawesome.com`
         }
       }
     },
     'gatsby-plugin-react-helmet',
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Clean lines CMS`,
+        short_name: `CL-CMS`,
+        start_url: `/`,
+        background_color: `#fff`,
+        theme_color: `#4904a4`,
+        display: `minimal-ui`,
+        icon: `./src/img/logo.png`,
+        icon_options: {
+          purpose: `any maskable`
+        },
+        crossOrigin: `use-credentials`
+      }
+    },
+    `gatsby-plugin-remove-serviceworker`,
     `gatsby-plugin-sass`,
     {
       // keep as first gatsby-source-filesystem plugin for gatsby image support
@@ -81,13 +102,14 @@ module.exports = {
         modulePath: `${__dirname}/src/cms/cms.js`
       }
     },
-    /*{
+    {
       resolve: 'gatsby-plugin-purgecss', // purges all unused/unreferenced css rules
       options: {
         develop: true, // Activates purging in npm run develop
-        purgeOnly: ['/all.scss'] // applies purging only on the scss file
+        printReject: true,
+        purgeOnly: ['./src/components/all.scss', 'node_modules/font-awesome/'] // applies purging only on the scss file
       }
-    }, // must be after other CSS plugins*/
-    'gatsby-plugin-netlify' // make sure to keep it last in the array
+    }, // must be after other CSS plugins
+    `gatsby-plugin-netlify` // make sure to keep it last in the array
   ]
 };
