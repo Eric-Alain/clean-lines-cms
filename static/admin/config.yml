@@ -1,5 +1,5 @@
 backend:
-  name: git-gateway
+  name: git-gateway  
   branch: master
   commit_messages:
     create: 'Create {{collection}} “{{slug}}”'
@@ -19,6 +19,7 @@ media_library:
     api_key: 216125798889682
     multiple: true
 
+local_backend: true
 media_folder: static/img
 public_folder: /img
 
