@@ -15,7 +15,6 @@ const Thumbnails = ({ galleries }) => {
       .replace(/(^\w{1}|\.\s*\w{1})/gi, (replaced) => {
         return replaced.toUpperCase();
       });
-  console.log(galleries.name);
   return (
     <>
       <Col xs='12' sm='6' xl='4' className='mb-3 hex-thumbnail'>

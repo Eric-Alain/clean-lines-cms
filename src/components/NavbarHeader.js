@@ -50,7 +50,6 @@ const NavbarHeader = () => {
 
   //Variable for data from graphql query
   const templates = linksQuery.templatePages.edges;
-  //console.log(templates)
 
   //Render link list for all desired template pages, optional parameter for exluding certain links based on file name, returns a filtered array of Gatsby <Link> components
   const renderTemplateLinks = (query, exclusions = '') => {

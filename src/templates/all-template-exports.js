@@ -20,7 +20,7 @@ export const BlogPostTemplate = ({ content, contentComponent, description, tags,
       {helmet || ''}
       <Row>
         <Col xs='12'>
-          <h1 className='title is-size-2 has-text-weight-bold is-bold-light'>{title}</h1>
+          <h1>{title}</h1>
           <p>{description}</p>
           <PostContent content={content} />
           {tags && tags.length ? (
