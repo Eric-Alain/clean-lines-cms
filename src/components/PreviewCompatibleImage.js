@@ -49,12 +49,12 @@ const PreviewCompatibleImage = ({ imageInfo }) => {
   }, [imageInfo, imageFloat, imageWidth]);
 
   if (!!image && !!image.childImageSharp) {
-    return <GatsbyImage image={getImage(image)} className={`${float} ${width} ${className} rounded`} alt={alt} />;
+    return <GatsbyImage image={getImage(image)} className={`${float} ${width} ${className}`} alt={alt} />;
   }
 
   //For cloudinary images
   else if (!!image && !!/https.*?cloudinary/.test(image)) {
-    return <img src={image} alt={alt} className={`${float} ${width} ${className} rounded gatsby-image-wrapper`} />;
+    return <img src={image} alt={alt} className={`${float} ${width} ${className} gatsby-image-wrapper`} />;
   }
 
   return null;

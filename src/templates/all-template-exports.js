@@ -16,30 +16,29 @@ import Thumbnails from '../components/Thumbnails';
 export const BlogPostTemplate = ({ content, contentComponent, description, tags, title, helmet }) => {
   const PostContent = contentComponent || Content;
   return (
-    <section className='section'>
+    <Container className='my-5'>
       {helmet || ''}
-      <div className='container content'>
-        <div className='columns'>
-          <div className='column is-10 is-offset-1'>
-            <h1 className='title is-size-2 has-text-weight-bold is-bold-light'>{title}</h1>
-            <p>{description}</p>
-            <PostContent content={content} />
-            {tags && tags.length ? (
-              <div style={{ marginTop: `4rem` }}>
-                <h4>Tags</h4>
-                <ul className='taglist'>
-                  {tags.map((tag) => (
-                    <li key={tag + `tag`}>
-                      <Link to={`/tags/${kebabCase(tag)}/`}>{tag}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    </section>
+      <Row>
+        <Col xs='12'>
+          <h1 className='title is-size-2 has-text-weight-bold is-bold-light'>{title}</h1>
+          <p>{description}</p>
+          <PostContent content={content} />
+          {tags && tags.length ? (
+            <>
+              <h4 class='mt-5 mb-1'>Tags</h4>
+              {tags.map((tag, i) => {
+                return (
+                  <span key={tag + `tag`}>
+                    <Link to={`/tags/${kebabCase(tag)}/`}>{tag}</Link>
+                    {i !== tags.length - 1 ? ', ' : null}
+                  </span>
+                );
+              })}
+            </>
+          ) : null}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
@@ -59,7 +58,7 @@ export const GalleryLandingPageTemplate = ({ title, description, galleries }) =>
     return {
       name: item.node.name,
       galleries: item.node.childrenMarkdownRemark.map((item2) => {
-        return item2.frontmatter.gallery.images.slice(0, 3);
+        return item2.frontmatter.gallery.images.slice(0, 5);
       })
     };
   });
@@ -73,7 +72,7 @@ export const GalleryLandingPageTemplate = ({ title, description, galleries }) =>
   return (
     <main>
       <Container>
-        <Row className=''>
+        <Row>
           <h1 className='display-3 fw-bold mb-2 pb-2 border-bottom'>{title}</h1>
           <Col xs='auto' className='mt-5'>
             <p className='lead'>{description}</p>
