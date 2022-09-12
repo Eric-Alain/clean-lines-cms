@@ -1,17 +1,18 @@
 ---
 templateKey: blog-post
-title: A beginners’ guide to brewing with Chemex
+title: Blog 2
 date: 2017-01-04T15:04:10.000Z
 description: Brewing with a Chemex probably seems like a complicated,
   time-consuming ordeal, but once you get used to the process, it becomes a
   soothing ritual that's worth the effort every time.
 featuredpost: false
-featuredimage: https://res.cloudinary.com/dky5oko1h/image/upload/v1635866300/blog_eqnzzq.jpg
+featuredimage:
+  - https://res.cloudinary.com/dky5oko1h/image/upload/v1637176870/Clean%20lines%20/Gallery%20one/blake-verdoorn-cssvEZacHvQ-unsplash_csban2.jpg
 tags:
   - brewing
   - chemex
 ---
-![chemex](https://res.cloudinary.com/dky5oko1h/image/upload/v1635866300/blog_eqnzzq.jpg)
+![chemex](https://res.cloudinary.com/dky5oko1h/image/upload/v1637176870/Clean%20lines%20/Gallery%20one/blake-verdoorn-cssvEZacHvQ-unsplash_csban2.jpg "Title 2")
 
 This week we’ll **take** a look at all the steps required to make astonishing coffee with a Chemex at home. The Chemex Coffeemaker is a manual, pour-over style glass-container coffeemaker that Peter Schlumbohm invented in 1941, and which continues to be manufactured by the Chemex Corporation in Chicopee, Massachusetts.
 
