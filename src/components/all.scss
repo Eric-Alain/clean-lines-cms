@@ -10,7 +10,7 @@
 $white: #fff;
 $light-grey: #eff0f1;
 $theme-green: #495e31;
-$theme-green-accent: #3F562E;
+$theme-green-accent: #3f562e;
 $gold: #ab9900;
 $alt-black: #1b1b1b;
 $black: #000;
@@ -99,6 +99,11 @@ $screen-xl-min: 1200px;
 html,
 body {
   overflow-x: hidden;
+}
+
+.gatsby-image-wrapper {
+  height: auto;
+  width: auto;
 }
 
 //This allows the footer to remain at the bottom of the page and for the for

@@ -121,7 +121,7 @@ const NavbarHeader = () => {
                   Blog
                 </Link>
                 <NavDropdown title='Galleries' id='galleries-dropdown' renderMenuOnMount={true}>
-                  <Link to='/all-galleries' className='dropdown-item'>
+                  <Link to='/galleries' className='dropdown-item'>
                     All galleries
                   </Link>
                   {renderGalleryLinks(galleries)}

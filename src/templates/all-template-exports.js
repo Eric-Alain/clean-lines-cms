@@ -8,7 +8,6 @@ import Lightbox from '../components/Lightbox';
 import MarkdownContent from '../components/MarkdownContent';
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
 import Sections from '../components/Sections';
-import HexGrid from '../components/HexGrid';
 import { adjustForCloudinary } from '../utils';
 
 /******/
@@ -50,56 +49,6 @@ BlogPostTemplate.propTypes = {
   tag: PropTypes.array,
   title: PropTypes.string,
   helmet: PropTypes.object
-};
-
-/**********************/
-/*GALLERY LANDING PAGE*/
-/**********************/
-export const GalleryLandingPageTemplate = ({ title, description, galleries }) => {
-  const getGalleries = galleries.edges.map((item) => {
-    return {
-      name: item.node.name,
-      galleries: item.node.childrenMarkdownRemark.map((item2) => {
-        return item2.frontmatter.gallery.images.slice(0, 5);
-      })
-    };
-  });
-
-  const renderHexGrid = (array) => {
-    return array.map((item, i) => {
-      return <HexGrid galleries={item} key={i} />;
-    });
-  };
-
-  return (
-    <main>
-      <Container>
-        <Row>
-          <h1 className='display-3 fw-bold mb-2 pb-2 border-bottom'>{title}</h1>
-          <Col xs='auto' className='mt-5'>
-            <p className='lead'>{description}</p>
-          </Col>
-        </Row>
-        <Row className='justify-content-center'>{renderHexGrid(getGalleries)}</Row>
-      </Container>
-    </main>
-  );
-};
-
-GalleryLandingPageTemplate.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  galleries: PropTypes.shape({
-    edges: PropTypes.arrayOf(
-      PropTypes.shape({
-        node: PropTypes.shape({
-          childrenMarkdownRemark: PropTypes.array,
-          name: PropTypes.string,
-          relativePath: PropTypes.string
-        })
-      })
-    )
-  })
 };
 
 /**************/

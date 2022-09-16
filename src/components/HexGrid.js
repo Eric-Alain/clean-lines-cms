@@ -15,7 +15,7 @@ const HexGrid = ({ galleries }) => {
               <Card.Title>
                 <h3 className='mb-1 pb-1 border-bottom'>{slugToString(galleries.name) || ''}</h3>
               </Card.Title>
-              {galleries.galleries.map((item, i) => {
+              {galleries.images.map((item, i) => {
                 return item.map((inner, j) => {
                   return (
                     <div className={`stack-${j} gallery-landing-img-container`} key={j}>
@@ -41,8 +41,10 @@ const HexGrid = ({ galleries }) => {
 };
 
 HexGrid.propTypes = {
-  name: PropTypes.string,
-  galleries: PropTypes.arrayOf(PropTypes.string)
+  galleries: PropTypes.shape({
+    name: PropTypes.string,
+    images: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+  })
 };
 
 export default HexGrid;
