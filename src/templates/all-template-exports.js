@@ -8,7 +8,8 @@ import Lightbox from '../components/Lightbox';
 import MarkdownContent from '../components/MarkdownContent';
 import PreviewCompatibleImage from '../components/PreviewCompatibleImage';
 import Sections from '../components/Sections';
-import Thumbnails from '../components/Thumbnails';
+import HexGrid from '../components/HexGrid';
+import { adjustForCloudinary } from '../utils';
 
 /******/
 /*BLOG*/
@@ -24,7 +25,7 @@ export const BlogPostTemplate = ({ content, contentComponent, description, tags,
           <p>{description}</p>
           <PostContent content={content} />
           {tags && tags.length ? (
-            <>
+            <div class='tag'>
               <h4 class='mt-5 mb-1'>Tags</h4>
               {tags.map((tag, i) => {
                 return (
@@ -34,7 +35,7 @@ export const BlogPostTemplate = ({ content, contentComponent, description, tags,
                   </span>
                 );
               })}
-            </>
+            </div>
           ) : null}
         </Col>
       </Row>
@@ -46,6 +47,7 @@ BlogPostTemplate.propTypes = {
   content: PropTypes.node.isRequired,
   contentComponent: PropTypes.func,
   description: PropTypes.string,
+  tag: PropTypes.array,
   title: PropTypes.string,
   helmet: PropTypes.object
 };
@@ -63,9 +65,9 @@ export const GalleryLandingPageTemplate = ({ title, description, galleries }) =>
     };
   });
 
-  const renderThumbnails = (array) => {
+  const renderHexGrid = (array) => {
     return array.map((item, i) => {
-      return <Thumbnails galleries={item} key={i} />;
+      return <HexGrid galleries={item} key={i} />;
     });
   };
 
@@ -78,7 +80,7 @@ export const GalleryLandingPageTemplate = ({ title, description, galleries }) =>
             <p className='lead'>{description}</p>
           </Col>
         </Row>
-        <Row className='justify-content-center'>{renderThumbnails(getGalleries)}</Row>
+        <Row className='justify-content-center'>{renderHexGrid(getGalleries)}</Row>
       </Container>
     </main>
   );
@@ -86,7 +88,18 @@ export const GalleryLandingPageTemplate = ({ title, description, galleries }) =>
 
 GalleryLandingPageTemplate.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.string
+  description: PropTypes.string,
+  galleries: PropTypes.shape({
+    edges: PropTypes.arrayOf(
+      PropTypes.shape({
+        node: PropTypes.shape({
+          childrenMarkdownRemark: PropTypes.array,
+          name: PropTypes.string,
+          relativePath: PropTypes.string
+        })
+      })
+    )
+  })
 };
 
 /**************/
@@ -137,18 +150,22 @@ export const IndexPageTemplate = ({ landingBox, catchyBanner, pageSections }) =>
           xs='12'
           className='full-width-image'
           style={{
-            backgroundImage: `url(${!!landingBox.image.childImageSharp ? landingBox.image.childImageSharp.fluid.src : landingBox.image})`
+            backgroundImage: `url(${
+              !!landingBox.image.childImageSharp
+                ? adjustForCloudinary(landingBox.image.childImageSharp.fluid.src.toString(), 2400, 'webp')
+                : adjustForCloudinary(landingBox.image.toString(), 2400, 'webp')
+            })`
           }}
         >
           <Row className='justify-content-center mx-2 mx-sm-auto'>
             <Col xs='10' className='hero-text text-center p-4'>
               <h1 className='display-2'>{landingBox.title}</h1>
-              <h3 className='text-muted fw-normal'>{landingBox.subheading}</h3>
+              <p className='h3 text-muted fw-normal'>{landingBox.subheading}</p>
             </Col>
           </Row>
         </Col>
       </Row>
-      <Row className='dbo-red justify-content-center catchy-banner'>
+      <Row className='justify-content-center catchy-banner'>
         <Col xs='10' md='6'>
           <MarkdownContent content={catchyBanner.body} className='markdown-content' />
         </Col>
@@ -199,7 +216,7 @@ export const TemplatePageTemplate = ({ title, templatePageSections }) => {
         return (
           // Concatenate the fields in a single column and insert the image
           <Col>
-            {image ? <PreviewCompatibleImage imageInfo={obj} /> : null}
+            {image ? <PreviewCompatibleImage imageInfo={obj} dfltWidth='650' dfltHeight='433' /> : null}
             <MarkdownContent content={`${t1}\n\n${t2}`} className='markdown-content' />
           </Col>
         );
@@ -219,7 +236,7 @@ export const TemplatePageTemplate = ({ title, templatePageSections }) => {
         return (
           // Otherwise, single column with a floated image if one exists (the default)
           <Col>
-            {image ? <PreviewCompatibleImage imageInfo={obj} /> : null}
+            {image ? <PreviewCompatibleImage imageInfo={obj} dfltWidth='650' dfltHeight='433' /> : null}
             <MarkdownContent content={t1} className='markdown-content' />
           </Col>
         );
@@ -277,4 +294,23 @@ export const TemplatePageTemplate = ({ title, templatePageSections }) => {
       </Container>
     </main>
   );
+};
+
+TemplatePageTemplate.propTypes = {
+  title: PropTypes.string,
+  templatePageSections: PropTypes.shape({
+    templateSection: PropTypes.arrayOf(
+      PropTypes.shape({
+        alt: PropTypes.string,
+        extraText: PropTypes.string,
+        headingLevel: PropTypes.string,
+        id: PropTypes.string,
+        image: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+        imageFloat: PropTypes.string,
+        imageWidth: PropTypes.string,
+        subheading: PropTypes.string,
+        text: PropTypes.string
+      })
+    )
+  })
 };

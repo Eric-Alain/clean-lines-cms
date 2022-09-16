@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { navigate } from 'gatsby-link';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import Layout from '../../components/Layout';

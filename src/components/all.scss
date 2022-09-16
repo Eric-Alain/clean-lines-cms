@@ -10,7 +10,7 @@
 $white: #fff;
 $light-grey: #eff0f1;
 $theme-green: #495e31;
-$theme-green-accent: #647f43;
+$theme-green-accent: #3F562E;
 $gold: #ab9900;
 $alt-black: #1b1b1b;
 $black: #000;
@@ -135,6 +135,21 @@ main {
 
   section {
     margin-top: 2rem;
+  }
+}
+
+.tag {
+  a {
+    color: $primary-accent;
+    text-decoration: none;
+    @include transition(all 0.2s ease-out);
+
+    &:hover {
+      color: $primary-accent;
+      text-decoration: underline;
+      @include brightness(130%);
+      @include transition(all 0.2s ease-out);
+    }
   }
 }
 
@@ -541,49 +556,6 @@ footer {
           background: lighten($alt-black, 15%);
         }
       }
-    }
-  }
-}
-
-/***************/
-/**NOTICE CARD**/
-/***************/
-.notice-card {
-  padding: 1rem;
-  border-radius: 0.25rem;
-  margin-bottom: 1rem;
-
-  .notice-card-header {
-    font-size: calc(1.5 * 1rem);
-    margin-bottom: 1rem;
-    padding-bottom: 0.3rem;
-    border-bottom: 1px solid #dadada;
-  }
-
-  .notice-card-body ol {
-    padding-inline-start: 1rem;
-  }
-
-  .notice-card-body ol li {
-    margin-bottom: 0.6rem;
-  }
-
-  .notice-card-body ol ol {
-    padding-inline-start: 2rem;
-  }
-}
-
-.notice-card.dark {
-  background: rgba(0, 0, 0, 0.75);
-  color: #fff;
-
-  a {
-    color: #f899ff;
-    @include transition(all 0.2s ease-out);
-
-    &:hover {
-      filter: brightness(80%);
-      @include transition(all 0.2s ease-out);
     }
   }
 }

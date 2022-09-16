@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'gatsby';
 import { graphql, useStaticQuery } from 'gatsby';
-import logo from '../img/logo.png';
+import logo from '../img/logo.webp';
 import { Container, Navbar, Nav, NavDropdown, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faInstagram, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { gsap, Sine } from 'gsap';
+import { slugToString } from '../utils'
 
 const NavbarHeader = () => {
   //Query for existing files that we'd like to generate link lists from, the idea being to make less manual work for whenever we add new pages
@@ -37,17 +38,6 @@ const NavbarHeader = () => {
     `
   );
 
-  //Helper function - convert slugs to sentence cased strings
-  const slugToString = (str) =>
-    str
-      .toLowerCase()
-      .split('-')
-      .map((i) => i[0].toUpperCase() + i.substr(1))
-      .join(' ')
-      .replace(/(^\w{1}|\.\s*\w{1})/gi, (replaced) => {
-        return replaced.toUpperCase();
-      });
-
   //Variable for data from graphql query
   const templates = linksQuery.templatePages.edges;
 
@@ -65,9 +55,6 @@ const NavbarHeader = () => {
       );
     });
   };
-
-  //Variable for data from graphql query
-  //const galleryLanding = linksQuery.galleryLanding
 
   //Variable for data from graphql query
   const galleries = linksQuery.galleryPages.edges;
@@ -112,7 +99,7 @@ const NavbarHeader = () => {
       <Container className='g-1 mx-3 mx-md-auto'>
         <Navbar.Brand>
           <Link to='/'>
-            <img width='120px' height='auto' className='img-responsive' src={logo} alt='Clean lines logo' />
+            <img width='120' height='120' className='img-responsive' src={logo} alt='Clean lines logo' />
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' ref={toggleRef} onClick={() => setExpand(!expand)}>

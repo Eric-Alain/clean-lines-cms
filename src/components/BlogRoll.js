@@ -23,6 +23,8 @@ export const BlogRoll = ({ data }) => {
                         alt: `featured image thumbnail for post ${frontmatter.title}`,
                         className: 'blogroll-img'
                       }}
+                      dfltWidth='306'
+                      dfltHeight='204'
                     />
                   </div>
                 </Col>

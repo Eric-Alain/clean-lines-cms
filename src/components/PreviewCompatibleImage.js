@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { adjustForCloudinary } from '../utils';
 
-const PreviewCompatibleImage = ({ imageInfo }) => {
+const PreviewCompatibleImage = ({ imageInfo, dfltHeight = 'auto', dfltWidth = 'auto' }) => {
   const getFloatClass = (float) => {
     switch (float) {
       case 'Left':
@@ -10,7 +11,7 @@ const PreviewCompatibleImage = ({ imageInfo }) => {
       case 'Right':
         return 'float-end ms-3 mb-3';
       default:
-        return '';
+        return null;
     }
   };
 
@@ -23,23 +24,16 @@ const PreviewCompatibleImage = ({ imageInfo }) => {
       case '75%':
         return 'w-100 w-md-75';
       default:
-        return '';
+        return null;
     }
   };
-  /*Modify Cloudinary urls if provided in order to optimize them (size, performance, format, cropping etc)*/
-  const adjustForCloudinary = (str) => {
-    if (/https.*?cloudinary/.test(str)) {
-      return str.replace(/^(.*?upload\/)(.*?)(\.jpg)$/, '$1c_mfit,c_scale,f_auto,q_auto:eco,w_900/$2.webp');
-    } else {
-      return str;
-    }
-  };
-  const image = adjustForCloudinary(imageInfo.image.toString());
+
+  const image = adjustForCloudinary(imageInfo.image.toString(), 500, 'webp');
 
   /*Destructed object  variable assignment*/
-  const { alt = '', imageFloat, imageWidth, className } = imageInfo;
+  const { alt = '', imageFloat = null, imageWidth = null, className = null } = imageInfo;
 
-  /*States,  for changes in CMS*/
+  /*States, for changes in CMS*/
   const [float, setFloat] = useState(getFloatClass(imageFloat));
   const [width, setWidth] = useState(getWidthClass(imageWidth));
 
@@ -49,18 +43,23 @@ const PreviewCompatibleImage = ({ imageInfo }) => {
   }, [imageInfo, imageFloat, imageWidth]);
 
   if (!!image && !!image.childImageSharp) {
-    return <GatsbyImage image={getImage(image)} className={`${float} ${width} ${className}`} alt={alt} />;
+    return (
+      <GatsbyImage height={dfltHeight} width={dfltWidth} image={getImage(image)} alt={alt} className={`${float ? `${float} ` : ''}${width ? `${width} ` : ''}${className ? `${className} ` : ''}`} />
+    );
   }
 
   //For cloudinary images
   else if (!!image && !!/https.*?cloudinary/.test(image)) {
-    return <img src={image} alt={alt} className={`${float} ${width} ${className} gatsby-image-wrapper`} />;
+    return (
+      <img src={image} height={dfltHeight} width={dfltWidth} alt={alt} className={`${float ? `${float} ` : ''}${width ? `${width} ` : ''}${className ? `${className} ` : ''}gatsby-image-wrapper`} />
+    );
   }
-
   return null;
 };
 
 PreviewCompatibleImage.propTypes = {
+  dfltHeight: PropTypes.string,
+  dfltWidth: PropTypes.string,
   imageInfo: PropTypes.shape({
     alt: PropTypes.string,
     childImageSharp: PropTypes.object,

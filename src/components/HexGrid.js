@@ -1,20 +1,11 @@
 import React from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
-import { /*Row*/ Col, Card } from 'react-bootstrap';
+import { Col, Card } from 'react-bootstrap';
 import { Link } from 'gatsby';
+import { slugToString } from '../utils';
 
-const Thumbnails = ({ galleries }) => {
-  //Helper function - convert slugs to sentence cased strings
-  const slugToString = (str) =>
-    str
-      .toLowerCase()
-      .split('-')
-      .map((i) => i[0].toUpperCase() + i.substr(1))
-      .join(' ')
-      .replace(/(^\w{1}|\.\s*\w{1})/gi, (replaced) => {
-        return replaced.toUpperCase();
-      });
+const HexGrid = ({ galleries }) => {
   return (
     <>
       <Col xs='12' sm='6' xl='4' className='mb-3 hex-thumbnail'>
@@ -33,6 +24,8 @@ const Thumbnails = ({ galleries }) => {
                           image: inner,
                           className: 'gallery-landing-img'
                         }}
+                        dfltWidth='366'
+                        dfltHeight='244'
                       />
                     </div>
                   );
@@ -46,15 +39,10 @@ const Thumbnails = ({ galleries }) => {
     </>
   );
 };
-/*
-Thumbnails.propTypes = {
-  section: PropTypes.arrayOf(
-    PropTypes.shape({
-      image: PropTypes.object,
-      subheading: PropTypes.string,
-      text: PropTypes.string
-    })
-  )
-};*/
 
-export default Thumbnails;
+HexGrid.propTypes = {
+  name: PropTypes.string,
+  galleries: PropTypes.arrayOf(PropTypes.string)
+};
+
+export default HexGrid;
