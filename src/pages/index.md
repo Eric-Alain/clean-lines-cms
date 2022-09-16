@@ -33,7 +33,7 @@ pageSections:
       image:
         - https://res.cloudinary.com/dky5oko1h/image/upload/v1635866302/Clean%20lines%20/Gallery%20one/about_b5ced1.jpg
     - buttonText: Check out galleries
-      buttonLocation: /all-galleries
+      buttonLocation: /galleries
       image:
         - https://res.cloudinary.com/dky5oko1h/image/upload/v1637176940/Clean%20lines%20/Gallery%20two/jay-mantri-TFyi0QOx08c-unsplash_twx0mv.jpg
       subheading: Galleries
