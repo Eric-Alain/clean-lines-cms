@@ -24,9 +24,9 @@ pageSections:
         - https://res.cloudinary.com/dky5oko1h/image/upload/v1637438240/Clean%20lines%20/Gallery%20one/matthew-smith-Rfflri94rs8-unsplash_wvmkwl.jpg
       subheading: About
       text: Learn more about what makes us who we are.
-      buttonText: Learn more
+      buttonText: Learn about us
       buttonLocation: /content/about
-    - buttonText: Learn more
+    - buttonText: See our services
       buttonLocation: /content/services
       subheading: Services
       text: What we have to offer.
@@ -38,7 +38,7 @@ pageSections:
         - https://res.cloudinary.com/dky5oko1h/image/upload/v1637176940/Clean%20lines%20/Gallery%20two/jay-mantri-TFyi0QOx08c-unsplash_twx0mv.jpg
       subheading: Galleries
       text: See galleries of our latest work and events.
-    - buttonText: Check out blog
+    - buttonText: Read our blog
       buttonLocation: /blog
       image:
         - https://res.cloudinary.com/dky5oko1h/image/upload/v1635866300/Clean%20lines%20/Gallery%20one/services_gycc3d.jpg
