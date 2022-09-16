@@ -9,7 +9,7 @@ templatePageSections:
       image:
         - https://res.cloudinary.com/dky5oko1h/image/upload/v1637176947/Clean%20lines%20/Gallery%20two/justin-kauffman-a8lTjWJJgLA-unsplash_yqcub6.jpg
       imageFloat: Right
-      imageWidth: 50%
+      imageWidth: 25%
       text: >-
         Monocle ipsum dolor sit amet scandinavian espresso Airbus A380 Sunspel
         boutique bureaux. Winkreative smart tote bag sophisticated destination
