@@ -9,7 +9,7 @@ backend:
     deleteMedia: '[skip ci] Delete “{{path}}”'
 
 slug:
-  encoding: "ascii"
+  encoding: 'ascii'
   clean_accents: true
 
 media_library:
@@ -38,12 +38,7 @@ collections:
               label: 'Landing Box',
               name: landingBox,
               widget: object,
-              fields:
-                [
-                  { label: Image, name: image, widget: image },
-                  { label: Title, name: title, widget: string },
-                  { label: Subheading, name: subheading, widget: string }
-                ]
+              fields: [{ label: Image, name: image, widget: image }, { label: Title, name: title, widget: string }, { label: Subheading, name: subheading, widget: string }]
             }
           - { label: 'Catchy Banner', name: catchyBanner, widget: object, fields: [{ label: Body, name: body, widget: markdown }] }
           - {
@@ -67,20 +62,7 @@ collections:
                   }
                 ]
             }
-      - file: 'src/pages/all-galleries.md'
-        label: 'Gallery landing'
-        name: 'gallery-landing'
-        fields:
-          - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'gallery-landing' }
-          - { label: 'Title', name: 'title', widget: 'string', default: 'All Galleries' }
-          - {
-              label: Description,
-              name: description,
-              widget: string,
-              default: 'Describe put a cool description of your galleries if you want. Describe what the user might expect to find here.',
-              required: false
-            }
-
+            
   # Collection of all pages found in the technical menu
   - label: 'Gallery pages'
     label_singular: 'gallery page'
@@ -99,12 +81,7 @@ collections:
           fields:
             [
               { label: Images, name: images, widget: image, default: [''] },
-              {
-                label: Description,
-                name: description,
-                widget: string,
-                default: 'Describe what your gallery is all about. You can make a long description, or keep it brief. Do what feels good.'
-              }
+              { label: Description, name: description, widget: string, default: 'Describe what your gallery is all about. You can make a long description, or keep it brief. Do what feels good.' }
             ]
         }
 

@@ -12,7 +12,7 @@ const Sections = ({ pageSections }) => {
           <section className={`section-${i % 2 === 0 ? 'left' : 'right'}`}>
             <Row className='justify-content-center'>
               <Col xs='8' className='py-5 mb-5 mb-md-auto'>
-                <PreviewCompatibleImage imageInfo={section} />
+                <PreviewCompatibleImage imageInfo={section} dfltWidth="650" dfltHeight="433"/>
                 <Card className='section-card rounded-0 p-0 p-md-4'>
                   <Card.Body>
                     <Card.Title>

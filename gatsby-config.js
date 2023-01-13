@@ -24,6 +24,7 @@ module.exports = {
         }
       }
     },
+    `gatsby-plugin-preact`,
     'gatsby-plugin-react-helmet',
     {
       resolve: `gatsby-plugin-manifest`,
@@ -41,11 +42,18 @@ module.exports = {
         crossOrigin: `use-credentials`
       }
     },
-    `gatsby-plugin-remove-serviceworker`,
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        debug: false,
+        precachePages: [`/`]
+      }
+    },
+    `gatsby-plugin-loadable-components-ssr`,
     {
       resolve: `gatsby-plugin-sass`,
       options: {
-          implementation: require('sass')
+        implementation: require('sass')
       }
     },
     {
@@ -108,11 +116,110 @@ module.exports = {
       }
     },
     {
-      resolve: 'gatsby-plugin-purgecss', // purges all unused/unreferenced css rules
+      resolve: 'gatsby-plugin-brotli',
       options: {
-        develop: true, // Activates purging in npm run develop
-        printReject: true,
-        purgeOnly: ['./src/components/all.scss', 'node_modules/font-awesome/'] // applies purging only on the scss file
+        extensions: ['css', 'html', 'js', 'svg']
+      }
+    },
+    {
+      resolve: `gatsby-plugin-purgecss`,
+      options: {
+        printRejected: true,
+        purgeCSSOptions: {
+          safelist: {
+            deep: [
+              /___gatsby/,
+              /a/,
+              /align-items/,
+              /align-self/,
+              /bg/,
+              /blog-banner/,
+              /blogroll-img-container/,
+              /blogroll-img/,
+              /body/,
+              /brand/,
+              /btn/,
+              /card-body/,
+              /card/,
+              /catchy-banner/,
+              /close/,
+              /col/,
+              /collapsed/,
+              /contact/,
+              /container/,
+              /counter/,
+              /d-/,
+              /dropdown-menu/,
+              /dropdown/,
+              /fa-lg/,
+              /fa-2x/,
+              /fa-3x/,
+              /fa-facebook/,
+              /fa-instagram/,
+              /fa-twitter/,
+              /fa-youtube/,
+              /fa-bars/,
+              /fa-xmark/,
+              /flex/,
+              /float/,
+              /font/,
+              /footer/,
+              /full-width-image/,
+              /gallery-landing-img-container/,
+              /gallery-landing-img/,
+              /gatsby-image-wrapper/,
+              /gatsby/,
+              /h-/,
+              /h1/,
+              /h2/,
+              /h3/,
+              /h4/,
+              /h5/,
+              /h6/,
+              /hero-text/,
+              /hex-thumbnail/,
+              /html/,
+              /img/,
+              /justify-items/,
+              /justify-self/,
+              /landing-sections/,
+              /list-unstyled/,
+              /main/,
+              /m-/,
+              /mt/,
+              /mb/,
+              /ms/,
+              /me/,
+              /mx/,
+              /my/,
+              /nav/,
+              /p-/,
+              /pt/,
+              /pb/,
+              /ps/,
+              /pe/,
+              /px/,
+              /py/,
+              /ReactGridGallery/,
+              /responsive/,
+              /row/,
+              /section/,
+              /shadow/,
+              /show/,
+              /site-menu/,
+              /small/,
+              /social-nav/,
+              /sr-only/,
+              /svg/,
+              /tab/,
+              /tags/,
+              /text/,
+              /visually-hidden/,
+              /w-/,
+              /zoom-overlay/
+            ]
+          }
+        }
       }
     }, // must be after other CSS plugins
     `gatsby-plugin-netlify` // make sure to keep it last in the array

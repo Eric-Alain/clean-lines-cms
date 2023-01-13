@@ -1,13 +1,20 @@
-import React from 'react'
-import Layout from '../components/Layout'
+import React from 'react';
+import { Link } from 'gatsby';
+import Layout from '../components/Layout';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const NotFoundPage = () => (
   <Layout>
-    <div>
-      <h1>NOT FOUND</h1>
-      <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-    </div>
+    <Container className='my-5'>
+      <Row>
+        <Col xs='12'>
+          <h1>Whoops...</h1>
+          <p>You just tried to access a page that doesn't exist.</p>
+          <Link to='/'>Go to home page</Link>
+        </Col>
+      </Row>
+    </Container>
   </Layout>
-)
+);
 
-export default NotFoundPage
+export default NotFoundPage;
